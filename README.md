@@ -1,1 +1,1 @@
-York University - EECS 4413 - Group G Project
+# York University - EECS 4413 - Group G Front-End application
