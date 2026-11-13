@@ -5,6 +5,7 @@ import Login from './pages/Login.jsx'
 import { useAuth } from './auth.jsx'
 import { api, setToken } from './api.js'
 import VehicleDetails from './pages/VehicleDetails.jsx'
+import Cart from './pages/Cart.jsx'
 
 export default function App() {
   const { user, setUser } = useAuth()
@@ -43,6 +44,8 @@ export default function App() {
         <nav>
           <Link to="/">Vehicles</Link>
           {' | '}
+          <Link to="/cart">Cart</Link>
+          {' | '}
           {accountLinks}
           <hr />
         </nav>
@@ -54,6 +57,7 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/vehicles/:id" element={<VehicleDetails />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<p>Page not found. <Link to="/">Back to vehicles</Link></p>} />
         </Routes>
       </main>
