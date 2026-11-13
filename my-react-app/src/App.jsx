@@ -1,14 +1,31 @@
 import Catalog from './pages/Catalog.jsx'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import Register from './pages/Register.jsx'
 import Login from './pages/Login.jsx'
 import { useAuth } from './auth.jsx'
+import { api, setToken } from './api.js'
 
 export default function App() {
-  const { user } = useAuth()
+  const { user, setUser } = useAuth()
+  const navigate = useNavigate()
+    async function handleLogout() {
+      try {
+        await api('DELETE', '/api/sessions/current')
+      } catch (err) {
+      }
+      setToken(null)
+      setUser(null)
+      navigate('/')
+    }
   let accountLinks = null
   if (user) {
-    accountLinks = <span>Hello, {user.firstName}</span>
+    accountLinks = (
+      <span>
+        Hello, {user.firstName}
+        {' | '}
+        <button onClick={handleLogout}>Log out</button>
+      </span>
+    )
   } else {
     accountLinks = (
       <span>
