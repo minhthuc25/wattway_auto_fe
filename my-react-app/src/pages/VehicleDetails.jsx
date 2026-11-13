@@ -7,6 +7,8 @@ export default function VehicleDetails() {
     const [vehicle, setVehicle] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
+    const [cartMessage, setCartMessage] = useState('')
+    const [cartError, setCartError] = useState('')
 
     useEffect(() => {
         api('GET', '/api/vehicles/' + id)
@@ -27,6 +29,17 @@ export default function VehicleDetails() {
         accidents = 'Yes'
     }
 
+    async function handleAddToCart() {
+        setCartMessage('')
+        setCartError('')
+        try {
+            await api('POST', '/api/cart/items', { vehicleId: vehicle.id, quantity: 1})
+            setCartMessage('Added to cart')
+        } catch (err) {
+            setCartError(err.message)
+        }
+    }
+
     return (
         <div>
             <h2>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.trim}</h2>
@@ -41,6 +54,9 @@ export default function VehicleDetails() {
             <p>History report: {vehicle.historyReport}</p>
             <p>In stock: {vehicle.quantity}</p>
             <p>Description: {vehicle.description}</p>
+            <button onClick={handleAddToCart}>Add to cart</button>
+            <p>{cartError}</p>
+            <p>{cartMessage}</p>
             <Link to="/">Back to vehicles</Link>
         </div>
     )
