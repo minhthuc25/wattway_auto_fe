@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { api, setToken } from '../api.js'
+import { useAuth } from '../auth.jsx'
 
 export default function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const [message, setMessage] = useState('')
+    const { setUser } = useAuth()
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -14,6 +16,7 @@ export default function Login() {
         try {
             const result = await api('POST', '/api/sessions', {username, password})
             setToken(result.data.token)
+            setUser(result.data.user)
             setMessage('Logged in as ' + result.data.user.firstName)
         } catch (err) {
             setError(err.message)
