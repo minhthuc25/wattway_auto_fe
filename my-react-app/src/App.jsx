@@ -4,6 +4,7 @@ import Register from './pages/Register.jsx'
 import Login from './pages/Login.jsx'
 import { useAuth } from './auth.jsx'
 import { api, setToken } from './api.js'
+import VehicleDetails from './pages/VehicleDetails.jsx'
 
 export default function App() {
   const { user, setUser } = useAuth()
@@ -52,6 +53,7 @@ export default function App() {
           <Route path="/" element={<Catalog />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/vehicles/:id" element={<VehicleDetails />} />
           <Route path="*" element={<p>Page not found. <Link to="/">Back to vehicles</Link></p>} />
         </Routes>
       </main>

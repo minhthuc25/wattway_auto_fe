@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api } from '../api.js'
+import { Link } from 'react-router-dom'
 
 export default function Catalog() {
     const [vehicles, setVehicles] = useState([])
@@ -37,7 +38,7 @@ export default function Catalog() {
                 <tbody>
                     {vehicles.map((v) => (
                         <tr key={v.id}>
-                            <td>{v.year} {v.make} {v.model} {v.trim}</td>
+                            <td><Link to={'/vehicles/' + v.id}>{v.year} {v.make} {v.model} {v.trim}</Link></td>
                             <td>{v.condition}</td>
                             <td>{v.mileageKm}</td>
                             <td>{v.price}</td>
