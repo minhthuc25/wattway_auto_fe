@@ -5,6 +5,7 @@ export default function Cart() {
     const [cart, setCart] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
+    const [actionError, setActionError] = useState('')
 
     useEffect(() => {
         api('GET', '/api/cart')
@@ -23,6 +24,26 @@ export default function Cart() {
         return <p>Your cart is empty</p>
     }
 
+    async function changeQuantity(vehicleId, quantity) {
+        setActionError('')
+        try {
+            const json = await api('PATCH', '/api/cart/items/' + vehicleId, { quantity })
+            setCart(json.data)
+        } catch (err) {
+            setActionError(err.message)
+        }
+    }
+
+    async function removeItem(vehicleId) {
+        setActionError('')
+        try {
+            const json = await api('DELETE', '/api/cart/items/' + vehicleId)
+            setCart(json.data)
+        } catch (err) {
+            setActionError(err.message)
+        }
+    }
+
     return (
         <section>
             <h2>Your cart</h2>
@@ -33,6 +54,7 @@ export default function Cart() {
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
+                        <th>Change</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,12 +64,19 @@ export default function Cart() {
                             <td>{item.vehicle.price}</td>
                             <td>{item.quantity}</td>
                             <td>{item.lineTotal}</td>
+                            <td> <button disabled={item.quantity === 1} onClick={() => changeQuantity(item.vehicleId, item.quantity - 1)}>-</button>
+                            {' '}
+                            <button onClick={() => changeQuantity(item.vehicleId, item.quantity + 1)}>+</button>
+                            {' '}
+                            <button onClick={() => removeItem(item.vehicleId)}>Remove</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
             <p>Items: {cart.itemCount}</p>
             <p>Total: {cart.total}</p>
+            <p>{actionError}</p>
         </section>
     )
 }
