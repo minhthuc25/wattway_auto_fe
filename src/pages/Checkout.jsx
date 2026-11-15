@@ -21,7 +21,7 @@ export default function Checkout() {
     const [message, setMessage] = useState('')
 
     useEffect(() => {
-        Promise.all([api('GET', '/api/cart'), api('GET', '/api/users/me')]) // checkout requires data from two places, cart and users' address
+        Promise.all([api('GET', '/api/cart'), api('GET', '/api/users/me')])
         .then(([cartJson, userJson]) => {
             setCart(cartJson.data)
             const shipping = userJson.data.defaultShipping
@@ -51,7 +51,7 @@ export default function Checkout() {
         } catch (err) {
             setOrderError(err.message)
         } finally {
-            setSubmitting(false) // re-enable the button at the end
+            setSubmitting(false)
         }
     }
 
@@ -68,6 +68,8 @@ export default function Checkout() {
                 <p>{message}</p>
                 <p>Order number: {order.id}</p>
                 <p>Total: {formatPrice(order.total)}</p>
+                <Link to="/account">View your orders</Link>
+                {' | '}
                 <Link to="/">Back to vehicles</Link>
             </section>
         )
@@ -114,7 +116,7 @@ export default function Checkout() {
                     <label>Postal code </label>
                     <input value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
                 </p>
-                <h3>Credit card</h3>
+                <h3>Card details</h3>
                 <p>
                     <label>Card number </label>
                     <input autoComplete="off" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} />
@@ -128,6 +130,7 @@ export default function Checkout() {
                     <input autoComplete="off" value={cvv} onChange={(e) => setCvv(e.target.value)} />
                 </p>
                 <button type="submit" disabled={submitting}>Confirm order</button>
+                {submitting && <p>Placing order...</p>}
                 <p>{orderError}</p>
             </form>
         </section>

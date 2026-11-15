@@ -31,12 +31,13 @@ export default function VehicleDetails() {
     }
 
     async function handleAddToCart() {
-        setCartMessage('')
+        setCartMessage('Adding to cart...')
         setCartError('')
         try {
             await api('POST', '/api/cart/items', { vehicleId: vehicle.id, quantity: 1})
             setCartMessage('Added to cart')
         } catch (err) {
+            setCartMessage('')
             setCartError(err.message)
         }
     }

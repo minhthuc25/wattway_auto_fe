@@ -7,6 +7,7 @@ Wattway Auto is a React single-page application for browsing electric vehicles a
 - Browse the vehicle catalog and view vehicle details.
 - Create an account, log in, and log out.
 - Add vehicles to a cart, change quantities, remove individual items, and empty the cart.
+- Check out with a shipping address and card, and view past orders and a default shipping address on the account page.
 - Display loading states and API errors for data requests.
 
 ## Requirements
@@ -42,10 +43,11 @@ Open the local URL printed by Vite in your browser. Make sure the backend is run
 | --- | --- |
 | `/` | Vehicle catalog. |
 | `/vehicles/:id` | Details for a vehicle, with an add-to-cart action. |
-| `/register` | Create an account. |
+| `/register` | Create an account, optionally with a default shipping address. |
 | `/login` | Log in to an account. |
 | `/cart` | View and update the signed-in user's cart. |
 | `/checkout` | Enter shipping and card details and place an order for the cart. |
+| `/account` | Change the default shipping address and view past orders, including denied ones. |
 
 ## API usage
 
@@ -63,5 +65,7 @@ The frontend sends same-origin requests under `/api`; in development, Vite forwa
 | `PATCH` | `/api/cart/items/:vehicleId` | Change a cart item's quantity. |
 | `DELETE` | `/api/cart/items/:vehicleId` | Remove an item from the cart. |
 | `DELETE` | `/api/cart` | Empty the cart. |
-| `GET` | `/api/users/me` | Load the user's default shipping address for checkout. |
+| `GET` | `/api/users/me` | Load the user's account page. |
+| `PATCH` | `/api/users/me` | Save the default shipping address. |
 | `POST` | `/api/orders` | Place an order for the cart. |
+| `GET` | `/api/orders` | Load the user's past orders. |
