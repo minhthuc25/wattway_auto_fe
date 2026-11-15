@@ -50,6 +50,11 @@ export default function Checkout() {
             setMessage(json.message)
         } catch (err) {
             setOrderError(err.message)
+            if (err.status === 402) { // payment denied, user must re-enter card
+                setCardNumber('')
+                setExpiry('')
+                setCvv('')
+            }
         } finally {
             setSubmitting(false)
         }
