@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { api } from '../api.js'
+import { useAuth } from '../auth.jsx'
 
 export default function Register() {
     const [username, setUsername] = useState('')
@@ -13,6 +15,8 @@ export default function Register() {
     const [postalCode, setPostalCode] = useState('')
     const [error, setError] = useState('')
     const [message, setMessage] = useState('')
+    const [registered, setRegistered] = useState(false)
+    const { user, checkingLogin } = useAuth()
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -32,11 +36,31 @@ export default function Register() {
         setMessage('Creating account...')
         try {
             await api('POST', '/api/users', body)
-            setMessage('Account created')
+            setRegistered(true)
         } catch (err) {
             setMessage('')
             setError(err.message)
         }
+    }
+
+    if (checkingLogin) {
+        return <p>Loading...</p>
+    }
+    if (user) {
+        return (
+            <div>
+                <h2>Create an account</h2>
+                <p>You are logged in as {user.firstName}</p>
+            </div>
+        )
+    }
+    if (registered) {
+        return (
+            <div>
+                <h2>Registration complete</h2>
+                <p>Your account has been created</p>
+            </div>
+        )
     }
 
     return (

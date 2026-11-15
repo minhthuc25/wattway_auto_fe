@@ -5,6 +5,7 @@ const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null)
+    const [checkingLogin, setCheckingLogin] = useState(() => Boolean(getToken()))
 
     useEffect(() => {
         function handleSessionExpired() {
@@ -17,13 +18,14 @@ export function AuthProvider({ children }) {
             api('GET', '/api/users/me')
             .then((json) => setUser(json.data))
             .catch(() => {})
+            .finally(() => setCheckingLogin(false))
         }
 
         return () => window.removeEventListener('session-expired', handleSessionExpired)
     }, [])
 
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{ user, setUser, checkingLogin }}>
             {children}
         </AuthContext.Provider>
     )

@@ -10,7 +10,7 @@ import Checkout from './pages/Checkout.jsx'
 import Account from './pages/Account.jsx'
 
 export default function App() {
-  const { user, setUser } = useAuth()
+  const { user, setUser, checkingLogin } = useAuth()
   const navigate = useNavigate()
     async function handleLogout() {
       try {
@@ -21,7 +21,7 @@ export default function App() {
       setUser(null)
       navigate('/')
     }
-  let accountLinks
+  let accountLinks = null // empty while the saved login is being checked
   if (user) {
     accountLinks = (
       <span>
@@ -32,7 +32,7 @@ export default function App() {
         <button onClick={handleLogout}>Log out</button>
       </span>
     )
-  } else {
+  } else if (!checkingLogin) {
     accountLinks = (
       <span>
         <Link to="/register">Register</Link>

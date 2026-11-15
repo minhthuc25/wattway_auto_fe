@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { api, setToken } from '../api.js'
 import { useAuth } from '../auth.jsx'
 
@@ -7,7 +8,7 @@ export default function Login() {
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const [message, setMessage] = useState('')
-    const { setUser } = useAuth()
+    const { user, setUser, checkingLogin } = useAuth()
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -16,12 +17,23 @@ export default function Login() {
         try {
             const result = await api('POST', '/api/sessions', {username, password})
             setToken(result.data.token)
-            setUser(result.data.user)
-            setMessage('Logged in as ' + result.data.user.firstName)
+            setUser(result.data.user) // the page then switches to the logged-in view below
         } catch (err) {
             setMessage('')
             setError(err.message)
         }
+    }
+
+    if (checkingLogin) {
+        return <p>Loading...</p>
+    }
+    if (user) {
+        return (
+            <div>
+                <h2>Log in</h2>
+                <p>You are logged in as {user.firstName}</p>
+            </div>
+        )
     }
 
     return (
