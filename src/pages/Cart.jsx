@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { api } from '../api.js'
 
 export default function Cart() {
@@ -99,6 +100,8 @@ export default function Cart() {
             <p>Items: {cart.itemCount}</p>
             <p>Total: {cart.total}</p>
             <button disabled={updating} onClick={emptyCart}>Empty cart</button>
+            {' '}
+            <Link to="/checkout">Proceed to checkout</Link>
         </section>
     )
 }

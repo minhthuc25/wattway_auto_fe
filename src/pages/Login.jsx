@@ -12,13 +12,14 @@ export default function Login() {
     async function handleSubmit(e) {
         e.preventDefault()
         setError('')
-        setMessage('')
+        setMessage('Logging in...')
         try {
             const result = await api('POST', '/api/sessions', {username, password})
             setToken(result.data.token)
             setUser(result.data.user)
             setMessage('Logged in as ' + result.data.user.firstName)
         } catch (err) {
+            setMessage('')
             setError(err.message)
         }
     }

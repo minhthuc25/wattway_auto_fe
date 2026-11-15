@@ -45,6 +45,7 @@ Open the local URL printed by Vite in your browser. Make sure the backend is run
 | `/register` | Create an account. |
 | `/login` | Log in to an account. |
 | `/cart` | View and update the signed-in user's cart. |
+| `/checkout` | Enter shipping and card details and place an order for the cart. |
 
 ## API usage
 
@@ -62,3 +63,5 @@ The frontend sends same-origin requests under `/api`; in development, Vite forwa
 | `PATCH` | `/api/cart/items/:vehicleId` | Change a cart item's quantity. |
 | `DELETE` | `/api/cart/items/:vehicleId` | Remove an item from the cart. |
 | `DELETE` | `/api/cart` | Empty the cart. |
+| `GET` | `/api/users/me` | Load the user's default shipping address for checkout. |
+| `POST` | `/api/orders` | Place an order for the cart. |
