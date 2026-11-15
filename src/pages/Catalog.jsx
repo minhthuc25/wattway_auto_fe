@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api } from '../api.js'
+import { formatPrice } from '../format.js'
 import { Link } from 'react-router-dom'
 
 export default function Catalog() {
@@ -41,7 +42,7 @@ export default function Catalog() {
                             <td><Link to={'/vehicles/' + v.id}>{v.year} {v.make} {v.model} {v.trim}</Link></td>
                             <td>{v.condition}</td>
                             <td>{v.mileageKm}</td>
-                            <td>{v.price}</td>
+                            <td>{formatPrice(v.price)}</td>
                             <td>{v.quantity}</td>
                         </tr>
                     ))}

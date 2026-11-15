@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { api } from '../api.js'
+import { formatPrice } from '../format.js'
 
 export default function VehicleDetails() {
     const { id } = useParams()
@@ -43,11 +44,11 @@ export default function VehicleDetails() {
     return (
         <div>
             <h2>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.trim}</h2>
-            <p>Price: {vehicle.price}</p>
+            <p>Price: {formatPrice(vehicle.price)}</p>
             <p>Condition: {vehicle.condition}</p>
             <p>Mileage (km): {vehicle.mileageKm}</p>
             <p>Range (km): {vehicle.rangeKm}</p>
-            <p>Battery: {vehicle.batteryKwh}</p>
+            <p>Battery: {vehicle.batteryKwh} kWh</p>
             <p>Colour: {vehicle.color}</p>
             <p>Body type: {vehicle.bodyType}</p>
             <p>Accidents: {accidents}</p>

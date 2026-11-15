@@ -41,6 +41,11 @@ export async function api(method, path, body) {
         json = await res.json().catch(() => null)
     }
 
+    if (res.status === 401 && token && path !== '/api/sessions') {
+        setToken(null)
+        window.dispatchEvent(new Event('session-expired'))
+    }
+
     if (!res.ok) {
         let message = `Request failed (${res.status})`
         if (json && json.error) {

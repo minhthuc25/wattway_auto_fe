@@ -14,13 +14,13 @@ export default function App() {
     async function handleLogout() {
       try {
         await api('DELETE', '/api/sessions/current')
-      } catch (err) {
+      } catch {
       }
       setToken(null)
       setUser(null)
       navigate('/')
     }
-  let accountLinks = null
+  let accountLinks
   if (user) {
     accountLinks = (
       <span>

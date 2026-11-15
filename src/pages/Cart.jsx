@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../api.js'
+import { formatPrice } from '../format.js'
 
 export default function Cart() {
     const [cart, setCart] = useState(null)
@@ -83,9 +84,9 @@ export default function Cart() {
                     {cart.items.map((item) => (
                         <tr key={item.vehicleId}>
                             <td>{item.vehicle.year} {item.vehicle.make} {item.vehicle.model} {item.vehicle.trim}</td>
-                            <td>{item.vehicle.price}</td>
+                            <td>{formatPrice(item.vehicle.price)}</td>
                             <td>{item.quantity}</td>
-                            <td>{item.lineTotal}</td>
+                            <td>{formatPrice(item.lineTotal)}</td>
                             <td>
                             <button disabled={updating || item.quantity === 1} onClick={() => changeQuantity(item.vehicleId, item.quantity - 1)} aria-label={'Decrease quantity of ' + item.vehicle.make + ' ' + item.vehicle.model}>-</button>
                             {' '}
@@ -98,7 +99,7 @@ export default function Cart() {
                 </tbody>
             </table>
             <p>Items: {cart.itemCount}</p>
-            <p>Total: {cart.total}</p>
+            <p>Total: {formatPrice(cart.total)}</p>
             <button disabled={updating} onClick={emptyCart}>Empty cart</button>
             {' '}
             <Link to="/checkout">Proceed to checkout</Link>

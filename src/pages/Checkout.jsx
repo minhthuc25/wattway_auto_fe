@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../api.js'
+import { formatPrice } from '../format.js'
 
 export default function Checkout() {
     const [cart, setCart] = useState(null)
@@ -66,7 +67,7 @@ export default function Checkout() {
                 <h2>Checkout</h2>
                 <p>{message}</p>
                 <p>Order number: {order.id}</p>
-                <p>Total: {order.total}</p>
+                <p>Total: {formatPrice(order.total)}</p>
                 <Link to="/">Back to vehicles</Link>
             </section>
         )
@@ -86,11 +87,11 @@ export default function Checkout() {
             <ul>
                 {cart.items.map((item) => (
                     <li key={item.vehicleId}>
-                        {item.quantity} x {item.vehicle.year} {item.vehicle.make} {item.vehicle.model} {item.vehicle.trim}: {item.lineTotal}
+                        {item.quantity} x {item.vehicle.year} {item.vehicle.make} {item.vehicle.model} {item.vehicle.trim}: {formatPrice(item.lineTotal)}
                     </li>
                 ))}
             </ul>
-            <p>Total: {cart.total}</p>
+            <p>Total: {formatPrice(cart.total)}</p>
             <form onSubmit={handleSubmit}>
                 <h3>Shipping address</h3>
                 <p>
@@ -116,15 +117,15 @@ export default function Checkout() {
                 <h3>Credit card</h3>
                 <p>
                     <label>Card number </label>
-                    <input value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} />
+                    <input autoComplete="off" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} />
                 </p>
                 <p>
                     <label>Expiry (MM/YY) </label>
-                    <input value={expiry} onChange={(e) => setExpiry(e.target.value)} />
+                    <input autoComplete="off" value={expiry} onChange={(e) => setExpiry(e.target.value)} />
                 </p>
                 <p>
                     <label>CVV </label>
-                    <input value={cvv} onChange={(e) => setCvv(e.target.value)} />
+                    <input autoComplete="off" value={cvv} onChange={(e) => setCvv(e.target.value)} />
                 </p>
                 <button type="submit" disabled={submitting}>Confirm order</button>
                 <p>{orderError}</p>
