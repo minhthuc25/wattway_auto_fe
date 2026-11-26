@@ -30,6 +30,11 @@ export default function VehicleDetails() {
         accidents = 'Yes'
     }
 
+    let image = <p>No image available</p>
+    if (vehicle.imageUrl) {
+        image = <img src={vehicle.imageUrl} alt={vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model} width="400" />
+    }
+
     async function handleAddToCart() {
         setCartMessage('')
         setCartError('')
@@ -44,6 +49,7 @@ export default function VehicleDetails() {
     return (
         <div>
             <h2>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.trim}</h2>
+            <div>{image}</div>
             <p>Price: {formatPrice(vehicle.price)}</p>
             <p>Condition: {vehicle.condition}</p>
             <p>Mileage (km): {vehicle.mileageKm}</p>
