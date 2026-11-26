@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { api } from '../api.js'
 import { formatPrice } from '../format.js'
+import Reviews from '../components/Reviews.jsx'
 
 export default function VehicleDetails() {
     const { id } = useParams()
@@ -64,6 +65,7 @@ export default function VehicleDetails() {
             <button onClick={handleAddToCart}>Add to cart</button>
             <p>{cartError}</p>
             <p>{cartMessage}</p>
+            <Reviews vehicleId={vehicle.id} />
             <Link to="/">Back to vehicles</Link>
         </div>
     )
