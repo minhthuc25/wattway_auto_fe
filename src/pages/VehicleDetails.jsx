@@ -4,6 +4,7 @@ import { api } from '../api.js'
 import { formatPrice } from '../format.js'
 import Reviews from '../components/Reviews.jsx'
 import LoanCalculator from '../components/LoanCalculator.jsx'
+import SavingsCalculator from '../components/SavingsCalculator.jsx'
 
 export default function VehicleDetails() {
     const { id } = useParams()
@@ -66,6 +67,7 @@ export default function VehicleDetails() {
             <button onClick={handleAddToCart}>Add to cart</button>
             <p>{cartError}</p>
             <p>{cartMessage}</p>
+            <SavingsCalculator key={'savings-' + vehicle.id} vehicleId={vehicle.id} batteryKwh={vehicle.batteryKwh} rangeKm={vehicle.rangeKm} />
             <LoanCalculator key={vehicle.id} vehiclePrice={vehicle.price} />
             <Reviews vehicleId={vehicle.id} />
             <Link to="/">Back to vehicles</Link>
