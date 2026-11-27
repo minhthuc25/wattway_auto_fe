@@ -8,6 +8,7 @@ import VehicleDetails from './pages/VehicleDetails.jsx'
 import Cart from './pages/Cart.jsx'
 import Checkout from './pages/Checkout.jsx'
 import Account from './pages/Account.jsx'
+import Admin from './pages/Admin.jsx'
 import ChatBox from './components/ChatBox.jsx'
 
 export default function App() {
@@ -24,11 +25,16 @@ export default function App() {
     }
   let accountLinks = null // empty while the saved login is being checked
   if (user) {
+    let adminLink = null // only admins see the Admin page link
+    if (user.role === 'admin') {
+      adminLink = <>{' | '}<Link to="/admin">Admin</Link></>
+    }
     accountLinks = (
       <span>
         Hello, {user.firstName}
         {' | '}
         <Link to="/account">Account</Link>
+        {adminLink}
         {' | '}
         <button onClick={handleLogout}>Log out</button>
       </span>
@@ -65,6 +71,7 @@ export default function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<p>Page not found. <Link to="/">Back to vehicles</Link></p>} />
         </Routes>
       </main>
