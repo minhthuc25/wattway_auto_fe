@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../auth.jsx'
+import SalesReport from '../components/SalesReport.jsx'
+import UsageReport from '../components/UsageReport.jsx'
 
 export default function Admin() {
     const { user, checkingLogin } = useAuth()
@@ -27,7 +29,8 @@ export default function Admin() {
     return (
         <div>
             <h2>Admin</h2>
-            <p>The sales report, usage report and vehicle management will appear here.</p>
+            <SalesReport />
+            <UsageReport />
         </div>
     )
 }
