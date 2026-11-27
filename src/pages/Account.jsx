@@ -7,6 +7,7 @@ export default function Account() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [fullName, setFullName] = useState('')
+    const [role, setRole] = useState('')
     const [street, setStreet] = useState('')
     const [city, setCity] = useState('')
     const [province, setProvince] = useState('')
@@ -19,6 +20,7 @@ export default function Account() {
         Promise.all([api('GET', '/api/users/me'), api('GET', '/api/orders')])
         .then(([userJson, ordersJson]) => {
             setFullName(userJson.data.firstName + ' ' + userJson.data.lastName)
+            setRole(userJson.data.role)
             const shipping = userJson.data.defaultShipping
             if (shipping) {
                 setStreet(shipping.street)
@@ -57,6 +59,7 @@ export default function Account() {
         <section>
             <h2>Your account</h2>
             <p>Name: {fullName}</p>
+            <p>Role: {role}</p>
 
             <h3>Default shipping address</h3>
             <form onSubmit={handleSaveAddress}>
