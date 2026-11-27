@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { api } from '../api.js'
 
 const MAX_LENGTH = 300 // same limit as the API
+const HIDDEN_ON = ['/checkout', '/admin'] // hide the chatbot on these pages (checkout for security, admin is not necessary)
 // a link the assistant writes as [Vehicle Name](/vehicles/id)
 const LINK = /\[([^\]]+)\]\((\/(?:vehicles\/\d+|cart|checkout|account|login|register)?)\)/g
 
@@ -25,7 +26,8 @@ export default function ChatBox() {
     const [messages, setMessages] = useState([])
     const [input, setInput] = useState('')
     const [waiting, setWaiting] = useState(false)
-    const [history, setHistory] = useState([]) // the last questions and answers, sent so follow-up questions make sense
+    const [history, setHistory] = useState([]) // a log of the last questions and answers, sent so follow-up questions make sense
+    const { pathname } = useLocation()
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -51,6 +53,9 @@ export default function ChatBox() {
         }
     }
 
+    if (HIDDEN_ON.includes(pathname)) {
+        return null
+    }
     if (!open) {
         return <button onClick={() => setOpen(true)}>Ask assistant</button>
     }
