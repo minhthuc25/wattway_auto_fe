@@ -8,6 +8,7 @@ import VehicleDetails from './pages/VehicleDetails.jsx'
 import Cart from './pages/Cart.jsx'
 import Checkout from './pages/Checkout.jsx'
 import Account from './pages/Account.jsx'
+import ChatBox from './components/ChatBox.jsx'
 
 export default function App() {
   const { user, setUser, checkingLogin } = useAuth()
@@ -67,6 +68,8 @@ export default function App() {
           <Route path="*" element={<p>Page not found. <Link to="/">Back to vehicles</Link></p>} />
         </Routes>
       </main>
+
+      <ChatBox />
     </div>
   )
 }
