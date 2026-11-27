@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../api.js'
 
-// share of views that ended in a purchase, e.g. 2 purchases from 50 views -> "4%"
+// share of visitors who bought the vehicle, e.g. 2 purchases from 50 visitors -> "4%"
 function conversion(row) {
-    if (row.views === 0) {
+    if (row.visitors === 0) {
         return '-'
     }
-    return Math.round(row.purchases / row.views * 100) + '%'
+    return Math.round(row.purchases / row.visitors * 100) + '%'
 }
 
 export default function UsageReport() {
@@ -58,7 +58,8 @@ export default function UsageReport() {
         <section>
             <h3>Website usage report</h3>
             {results}
-			<p>*Conversion = Purchases / Views</p>
+			<p>Visitors = Views with unique IPs</p>
+			<p>Conversion = Purchases / Visitors</p>
         </section>
     )
 }
